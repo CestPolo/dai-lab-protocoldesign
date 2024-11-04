@@ -58,24 +58,16 @@ Si une erreur survient lors du calcul, l'utilisateur sera notifié par un messag
     "error": "Division by zero is not allowed"
   }
   ```
-- **Opération inconnue** : 
+- **JSON invalide** : 
   ```json
   {
     "result": null,
-    "error": "Unknown operation"
+    "error": "Invalid JSON"
   }
   ```
-- **Opérandes manquants** : 
-  ```json
-  {
-    "result": null,
-    "error": "Missing operands"
-  }
-  ```
-- **Opérandes invalides** : 
-  ```json
-  {
-    "result": null,
-    "error": "Invalid operands"
-  }
-  ```
+#### Gestion des erreurs côté client
+Si une erreur est générée côté client, un message d'erreur sera affiché à l'utilisateur et il devra ressaisir une nouvelle opération.
+
+- **Operation donné ne correspondant pas aux 4 opérations (add, sub, mul, div)** :`Invalid operation`
+- **Operande 1 ou 2 n'est pas un nombre** : `Invalid operand`
+- **Arguments manquants** : `Missing arguments`
