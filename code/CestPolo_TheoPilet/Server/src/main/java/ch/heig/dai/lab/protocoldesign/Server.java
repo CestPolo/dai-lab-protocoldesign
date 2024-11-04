@@ -1,7 +1,7 @@
 package ch.heig.dai.lab.protocoldesign;
 
 public class Server {
-    final int SERVER_PORT = 1234;
+    final int SERVER_PORT = 8080;
 
     public static void main(String[] args) {
         // Create a new server and run it
@@ -10,5 +10,6 @@ public class Server {
     }
 
     private void run() {
+
     } 
 }
