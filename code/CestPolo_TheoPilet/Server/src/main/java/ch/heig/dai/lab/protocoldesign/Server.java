@@ -12,14 +12,24 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Server class that listens for client connections and performs basic arithmetic operations.
+ */
 public class Server {
     final static int SERVER_PORT = 8080;
 
+    /**
+     * Main method to start the server.
+     * @param args Command line arguments
+     */
     public static void main(String[] args) {
         Server server = new Server();
         server.run();
     }
 
+    /**
+     * Runs the server, accepting client connections and processing requests.
+     */
     private void run() {
         Gson gson = new Gson();
         try (ServerSocket serverSocket = new ServerSocket(Server.SERVER_PORT)) {
@@ -31,6 +41,7 @@ public class Server {
                     PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream(), StandardCharsets.UTF_8), true);
                     String line;
                     while((line = in.readLine()) != null) {
+                        // Check if the client wants to disconnect
                         if(line.equalsIgnoreCase("exit")) {
                             System.out.println("Client disconnected");
                             break;
@@ -39,11 +50,13 @@ public class Server {
                         JsonObject response = new JsonObject();
 
                         try {
+                            // Parse the client's request
                             JsonObject request = gson.fromJson(line, JsonObject.class);
                             String operation = request.has("operation") ? request.get("operation").getAsString() : null;
                             double operand1 = request.has("operand1") ? request.get("operand1").getAsDouble() : 0;
                             double operand2 = request.has("operand2") ? request.get("operand2").getAsDouble() : 0;
 
+                            // Perform the requested operation
                             if(operation != null) {
                                 switch (operation) {
                                     case "add":
@@ -73,6 +86,7 @@ public class Server {
                             response.addProperty("result", (String) null);
                             response.addProperty("error", "Invalid JSON");
                         }
+                        // Send the response back to the client
                         out.println(gson.toJson(response));
                     }
                 } catch (Exception e) {
